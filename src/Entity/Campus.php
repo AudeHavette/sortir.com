@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EtatRepository;
+use App\Repository\CampusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EtatRepository::class)]
-class Etat
+#[ORM\Entity(repositoryClass: CampusRepository::class)]
+class Campus
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,7 +16,7 @@ class Etat
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $libelle = null;
+    private ?string $nom = null;
 
 
     public function getId(): ?int
@@ -31,14 +31,14 @@ class Etat
         return $this;
     }
 
-    public function getLibelle(): ?string
+    public function getNom(): ?string
     {
-        return $this->libelle;
+        return $this->nom;
     }
 
-    public function setLibelle(string $libelle): static
+    public function setNom(string $nom): static
     {
-        $this->libelle = $libelle;
+        $this->nom = $nom;
 
         return $this;
     }
