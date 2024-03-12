@@ -12,15 +12,15 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UtilisateurFixtures extends Fixture implements DependentFixtureInterface
 {
 
-    public function __construct(private UserPasswordHasherInterface $passwordHasher){
-
+    public function __construct(private UserPasswordHasherInterface $passwordHasher)
+    {
     }
 
 
     public function load(ObjectManager $manager): void
     {
 
-        $aude=new Utilisateur();
+        $aude = new Utilisateur();
         $aude->setNom('Havette');
         $aude->setPrenom('Aude');
         $aude->setTelephone('06112346270');
@@ -36,7 +36,7 @@ class UtilisateurFixtures extends Fixture implements DependentFixtureInterface
         $this->addReference('participant_aude', $aude);
         $this->addReference('organisateur_aude', $aude);
 
-        $brandon=new Utilisateur();
+        $brandon = new Utilisateur();
         $brandon->setNom('Chartier');
         $brandon->setPrenom('Brandon');
         $brandon->setTelephone('06112346270');
@@ -45,13 +45,13 @@ class UtilisateurFixtures extends Fixture implements DependentFixtureInterface
         $brandon->setRoles(['ROLE_USER']);
         $brandon->setActif(true);
         $brandon->setPseudo('Brandon');
-        $aude->setCampus($this->getReference('add_campus2'));
-      //  $aude->addSorty($this->getReference('sortie_passeur'));
+        $brandon->setCampus($this->getReference('add_campus2'));
+        //  $aude->addSorty($this->getReference('sortie_passeur'));
         $manager->persist($brandon);
         $this->addReference('participant_brandon', $brandon);
         $this->addReference('organisateur_brandon', $brandon);
 
-        $clement=new Utilisateur();
+        $clement = new Utilisateur();
         $clement->setNom('Morel');
         $clement->setPrenom('Clement');
         $clement->setTelephone('06112346270');
@@ -60,8 +60,8 @@ class UtilisateurFixtures extends Fixture implements DependentFixtureInterface
         $clement->setRoles(['ROLE_USER']);
         $clement->setActif(true);
         $clement->setPseudo('Clement');
-        $aude->setCampus($this->getReference('add_campus3'));
-       // $aude->addSorty($this->getReference('sortie_tourisme'));
+        $clement->setCampus($this->getReference('add_campus3'));
+        // $aude->addSorty($this->getReference('sortie_tourisme'));
         $manager->persist($clement);
         $this->addReference('participant_clement', $clement);
         $this->addReference('organisateur_clement', $clement);
@@ -71,7 +71,7 @@ class UtilisateurFixtures extends Fixture implements DependentFixtureInterface
 
     public function getDependencies()
     {
-        return[
+        return [
             CampusFixtures::class
         ];
     }
