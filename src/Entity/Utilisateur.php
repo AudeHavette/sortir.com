@@ -235,7 +235,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return(string) $this->email;
+        return (string) $this->email;
     }
 
     public function getCampus(): ?Campus
@@ -243,7 +243,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->campus;
     }
 
-    public function setCampus(?Campus $campus): static
+    public function setCampus(?Campus $campus)
     {
         $this->campus = $campus;
 

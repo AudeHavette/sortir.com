@@ -20,7 +20,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $apero->setNbInscriptionsMax(40);
         $apero->setInfosSortie('Détente');
         $apero->setEtat($this->getReference('etat_cree'));
-        $apero->setCampus($this->getReference('add-campus1'));
+        $apero->setCampus($this->getReference('add_campus1'));
         $apero->addParticipant($this->getReference('participant_aude'));
         $apero->addParticipant($this->getReference('participant_brandon'));
         $apero->setOrganisateur($this->getReference('organisateur_clement'));
@@ -35,7 +35,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $passeur->setNbInscriptionsMax(20);
         $passeur->setInfosSortie('Un bon moment');
         $passeur->setEtat($this->getReference('etat_ouvert'));
-        $passeur->setCampus($this->getReference('add-campus2'));
+        $passeur->setCampus($this->getReference('add_campus2'));
         $passeur->addParticipant($this->getReference('participant_brandon'));
         $passeur->addParticipant($this->getReference('participant_clement'));
         $passeur->setOrganisateur($this->getReference('organisateur_aude'));
@@ -50,7 +50,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $tourisme->setNbInscriptionsMax(10);
         $tourisme->setInfosSortie('Un peu de tourisme');
         $tourisme->setEtat($this->getReference('etat_ouvert'));
-        $tourisme->setCampus($this->getReference('add-campus3'));
+        $tourisme->setCampus($this->getReference('add_campus3'));
         $tourisme->addParticipant($this->getReference('participant_aude'));
         $tourisme->addParticipant($this->getReference('participant_clement'));
         $tourisme->setOrganisateur($this->getReference('organisateur_brandon'));
@@ -62,7 +62,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
 
     public function getDependencies()
     {
-        return[
+        return [
             EtatFixtures::class,
             CampusFixtures::class,
             UtilisateurFixtures::class

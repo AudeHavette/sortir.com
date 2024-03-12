@@ -14,7 +14,6 @@ class CampusFixtures extends Fixture
         $campus1->setNom('Campus de Saint-Herblain');
         $manager->persist($campus1);
         $manager->flush();
-        dump($campus1->getId());
         $this->addReference('add_campus1', $campus1);
 
         $campus2 = new Campus();
@@ -28,6 +27,5 @@ class CampusFixtures extends Fixture
         $manager->persist($campus3);
         $manager->flush();
         $this->addReference('add_campus3', $campus3);
-
     }
 }
