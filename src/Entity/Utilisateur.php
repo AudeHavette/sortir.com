@@ -243,7 +243,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->campus;
     }
 
-    public function setCampus(?Campus $campus)
+    public function setCampus(?Campus $campus): static
     {
         $this->campus = $campus;
 
