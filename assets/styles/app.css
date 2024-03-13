@@ -1,3 +1,94 @@
+
 body {
+    display:grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
     background-color: skyblue;
+
+    >header{
+        img{
+            height: 75px;
+        }
+
+    }
+
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: 'Asul', sans-serif;
+    background-color: aliceblue;
+}
+
+
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+
+header {
+    background-color: #A5A58D;
+    padding: 1rem 0;
+}
+
+header h1 {
+    margin: 0 0 10px 0;
+}
+
+header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+.header-logo {
+    font-size: 3rem;
+    font-weight: normal;
+}
+
+.header-logo img {
+    max-width: 42px;
+    margin-right: 5px;
+}
+
+.header-nav {
+    display: flex;
+}
+
+main {
+    flex: 1;
+    padding: 1rem 0;
+    background-color: #FFF1E6;
+}
+
+footer {
+    padding: 2rem 0;
+    text-align: center;
+    background-color: #EDDCD2;
+}
+
+label{
+    display:block;
+}
+
+input, textarea, select{
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+    max-width: 50%;
+    width: 150px;
+}
+
+.flash{
+    padding:20px;
+    font-weight: bold;
+    font-size: 1.4rem;
+    margin:1rem 0;
+    border-radius: 5px;
+}
+
+.flash-success{
+    background-color: rebeccapurple;
 }
