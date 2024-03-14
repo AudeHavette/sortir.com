@@ -13,7 +13,16 @@
     </head>
     <body>
     <header>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
         <img src="{{ asset('images/sortir.jpg') }}" alt="Sortir.com">
+
         <nav>
             <ul>
                 {% if is_granted('ROLE_ADMIN') %}
@@ -21,7 +30,7 @@
                     <a href="">Villes</a>
                 </li>
                 <li>
-                    <a href="}">Campus</a>
+                    <a href="">Campus</a>
                 </li>
                 {% endif %}
                 <li>
@@ -30,7 +39,7 @@
 
                 {% if app.user %}
                 <li>
-                    <a href="{{ path('app_profil', {'id' : app.user.id}) }}">Mon profil</a>
+                    <a href="{{ path('app_mon_profil', {'id' : app.user.id}) }}">Mon profil</a>
                 </li>
                 {% endif %}
 

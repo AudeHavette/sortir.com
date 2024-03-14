@@ -52,7 +52,22 @@ class SortieController extends AbstractController
             'sortieForm'=> $SortieForm->createView()
         ]);
     }
+    #[Route(path: ('/annulersortie/{id}'), name:'app_annuler_sortie')]
+    public function annulerSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($sortie);
+            $entityManager->flush();
 
+            $this->addFlash('success', 'La sortie a bien été annulée');
+
+            return $this->redirectToRoute('app_home');
+        }
+        return $this->render('sortie/drop.html.twig', [
+            'sortie'=> $sortie
+        ]);
+
+    }
 
 
 

@@ -26,7 +26,7 @@ class ProfilController extends AbstractController
                 // cf doc Symfony https://symfony.com/doc/current/security/passwords.html#hashing-the-password
                 $plainPassword = $form->get('motPasse')->getData();
                 $newHaschedPassword = $passwordHasher->hashPassword($user, $plainPassword);
-                $user->setPassword($newHaschedPassword);
+                $user->setMotPasse($newHaschedPassword);
 
                 $em->persist($user);
                 $em->flush();
