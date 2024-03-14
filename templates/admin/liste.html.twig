@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <section >
+        {%  for utilisateur in utilisateurs  %}
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ utilisateur.prenom }} {{ utilisateur.nom }}</h5>
+                    <p class="card-text">{{ utilisateur.campus.nom }}</p>
+                    <a href="{{ path('admin_detail', {'id':utilisateur.id}) }}" class="btn btn-primary">Voir</a>
+                </div>
+            </div><br>
+        {%  endfor %}
+    </section>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}

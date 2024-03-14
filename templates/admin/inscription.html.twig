@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+    <div>
+        {{ form_start(adminForm) }}
+        {{ form_row(adminForm) }}
+        <button>Inscription </button>
+        {{ form_end(adminForm) }}
+    </div>
+{% endblock %}
