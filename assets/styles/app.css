@@ -1,94 +1,127 @@
+/* Réinitialisation des styles et règles de base */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%; /* 16px */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%; /* Empêche les mobiles de modifier la taille du texte */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
 body {
-    display:grid;
-    grid-template-rows: auto 1fr auto;
-    min-height: 100vh;
-    background-color: skyblue;
+    background-color: #f7f7f7; /* Un fond léger */
+    color: #333; /* Gris foncé pour le texte principal */
+    font-weight: 400; /* Poids standard */
+    overflow-x: hidden; /* Empêche le défilement horizontal si le contenu déborde */
+}
 
-    >header{
-        img{
-            height: 75px;
-        }
+/* Structures et layout */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto; /* Centrer dans la page */
+    padding: 0 15px; /* Un peu de padding des deux côtés */
+}
 
+header,
+footer {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+/* Typographie */
+h1, h2, h3, h4, h5, h6 {
+    color: #5D4037; /* Marron pour les titres */
+    margin-bottom: 0.5rem;
+    font-weight: 600; /* Plus gros que le texte normal */
+}
+
+p {
+    margin-bottom: 1rem; /* Espacement standard pour les paragraphes */
+}
+
+a {
+    color: #795548; /* Marron pour les liens */
+    text-decoration: none; /* Pas de soulignement */
+    transition: color 0.3s; /* Transition douce pour les changements de couleur */
+}
+
+a:hover,
+a:focus {
+    color: #3E2723; /* Marron plus foncé pour le hover */
+    text-decoration: underline; /* Souligne au survol pour l'accessibilité */
+}
+
+/* Boutons et liens cliquables */
+.button,
+a.button { /* Classe pour les <a> qui doivent ressembler à des boutons */
+    display: inline-block;
+    background: #6D4C41; /* Marron pour le fond */
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 2rem; /* Arrondir les bords */
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none; /* Pas de soulignement */
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button:hover,
+.button:focus,
+a.button:hover,
+a.button:focus {
+    background: #5D4037; /* Marron plus foncé pour le hover */
+    transform: translateY(-3px); /* Légère élévation */
+}
+
+/* Formulaires */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%; /* Pleine largeur */
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+input[type="submit"],
+button {
+    width: auto; /* Ne prend que l'espace nécessaire */
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 2rem;
+    background: #6D4C41;
+    color: white;
+}
+
+input[type="submit"]:hover,
+button:hover {
+    background: #5D4037; /* Marron plus foncé */
+}
+
+/* Media queries pour la réactivité */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
     }
 
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    font-family: 'Asul', sans-serif;
-    background-color: aliceblue;
+    h1 {
+        font-size: 2rem; /* Plus petit pour les petits écrans */
+    }
 }
 
-
-.container {
-    max-width: 800px;
-    margin: auto;
-}
-
-header {
-    background-color: #A5A58D;
-    padding: 1rem 0;
-}
-
-header h1 {
-    margin: 0 0 10px 0;
-}
-
-header a {
-    text-decoration: none;
-    color: inherit;
-}
-
-header nav a:hover {
-    text-decoration: underline;
-}
-
-.header-logo {
-    font-size: 3rem;
-    font-weight: normal;
-}
-
-.header-logo img {
-    max-width: 42px;
-    margin-right: 5px;
-}
-
-.header-nav {
-    display: flex;
-}
-
-main {
-    flex: 1;
-    padding: 1rem 0;
-    background-color: #FFF1E6;
-}
-
-footer {
-    padding: 2rem 0;
-    text-align: center;
-    background-color: #EDDCD2;
-}
-
-label{
-    display:block;
-}
-
-input, textarea, select{
-    margin-bottom: 1rem;
-    box-sizing: border-box;
-    max-width: 50%;
-    width: 150px;
-}
-
-.flash{
-    padding:20px;
-    font-weight: bold;
-    font-size: 1.4rem;
-    margin:1rem 0;
-    border-radius: 5px;
-}
-
-.flash-success{
-    background-color: rebeccapurple;
-}
+/* Ajouter ici des classes spécifiques à des composants ou à des pages si nécessaire */
