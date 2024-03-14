@@ -24,6 +24,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $apero->addParticipant($this->getReference('participant_aude'));
         $apero->addParticipant($this->getReference('participant_brandon'));
         $apero->setOrganisateur($this->getReference('organisateur_clement'));
+        $apero->setLieu($this->getReference('lieu_biere_promise'));
         $manager->persist($apero);
         $this->addReference('sortie_apero', $apero);
 
@@ -39,6 +40,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $passeur->addParticipant($this->getReference('participant_brandon'));
         $passeur->addParticipant($this->getReference('participant_clement'));
         $passeur->setOrganisateur($this->getReference('organisateur_aude'));
+        $passeur->setLieu($this->getReference('lieu_maison_passeur'));
         $manager->persist($passeur);
         $this->addReference('sortie_passeur', $passeur);
 
@@ -54,6 +56,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $tourisme->addParticipant($this->getReference('participant_aude'));
         $tourisme->addParticipant($this->getReference('participant_clement'));
         $tourisme->setOrganisateur($this->getReference('organisateur_brandon'));
+        $tourisme->setLieu($this->getReference('lieu_cite_mer'));
         $manager->persist($tourisme);
         $this->addReference('sortie_tourisme', $tourisme);
 
@@ -65,7 +68,8 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         return [
             EtatFixtures::class,
             CampusFixtures::class,
-            UtilisateurFixtures::class
+            UtilisateurFixtures::class,
+            LieuFixtures::class
         ];
     }
 }

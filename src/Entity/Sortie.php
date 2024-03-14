@@ -39,7 +39,7 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Campus $campus = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: Etat::class, cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Etat $etat = null;
 
@@ -49,6 +49,10 @@ class Sortie
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $organisateur = null;
+
+    #[ORM\ManyToOne(targetEntity: Lieu::class, cascade: ['persist'], inversedBy: 'sorties')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Lieu $lieu = null;
 
     public function __construct()
     {
@@ -195,6 +199,18 @@ class Sortie
     public function setOrganisateur(?Utilisateur $organisateur): static
     {
         $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): static
+    {
+        $this->lieu = $lieu;
 
         return $this;
     }

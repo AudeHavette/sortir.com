@@ -21,6 +21,11 @@ class EtatRepository extends ServiceEntityRepository
         parent::__construct($registry, Etat::class);
     }
 
+    public function findByLibelle($libelle): ?Etat
+    {
+        return $this->findOneBy(['libelle' => $libelle]);
+    }
+
     //    /**
     //     * @return Etat[] Returns an array of Etat objects
     //     */
