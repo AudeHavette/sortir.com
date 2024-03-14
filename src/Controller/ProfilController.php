@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class ProfilController extends AbstractController
 {
-    #[Route('/profil/{id}', name: 'app_profil')]
+    #[Route('/monprofil/{id}', name: 'app_mon_profil')]
     public function modifProfil(Request $request, Utilisateur $user, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $form = $this->createForm(ProfilType::class, $user);
@@ -39,6 +39,15 @@ class ProfilController extends AbstractController
                     'formProfil' => $form
                 ]);
             }
+
+    }
+
+    #[Route('/profil/{id}', name: 'app_profil')]
+    function afficherProfil(Request $request, Utilisateur $user): Response
+    {
+        return $this->render('profil/show.html.twig', [
+            'user' => $user
+        ]);
 
     }
 }
