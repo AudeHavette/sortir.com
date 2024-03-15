@@ -117,3 +117,5 @@ d0c162,::1,POST,http://localhost/login,1710446767,,302,request
 4e9934,::1,GET,http://localhost/profil/3,1710446770,,200,request
 107df6,::1,GET,http://localhost/,1710446774,,200,request
 b591c3,::1,GET,http://localhost/createSortie,1710446781,,200,request
+d7f1fb,::1,GET,http://localhost/,1710510019,a2ed13,500,request
+a2ed13,::1,GET,http://localhost/,1710510019,,500,request

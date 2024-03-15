@@ -18,8 +18,8 @@ return [
         '/admin/liste' => [[['_route' => 'admin_liste', '_controller' => 'App\\Controller\\AdminController::listeUtilisateurs'], null, null, null, false, false, null]],
         '/login' => [[['_route' => 'app_login', '_controller' => 'App\\Controller\\SecurityController::login'], null, null, null, false, false, null]],
         '/logout' => [[['_route' => 'app_logout', '_controller' => 'App\\Controller\\SecurityController::logout'], null, null, null, false, false, null]],
-        '/' => [[['_route' => 'app_home', '_controller' => 'App\\Controller\\SortieController::home'], null, null, null, false, false, null]],
         '/createSortie' => [[['_route' => 'app_createSortie', '_controller' => 'App\\Controller\\SortieController::creationSortie'], null, null, null, false, false, null]],
+        '/' => [[['_route' => 'app_home', '_controller' => 'App\\Controller\\SortieController::home'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'
@@ -41,12 +41,16 @@ return [
                         .')'
                     .')'
                 .')'
-                .'|/admin/(?'
-                    .'|liste/([^/]++)(*:226)'
-                    .'|edit/([^/]++)(*:247)'
-                    .'|delete/([^/]++)(*:270)'
+                .'|/a(?'
+                    .'|dmin/(?'
+                        .'|liste/([^/]++)(*:229)'
+                        .'|edit/([^/]++)(*:250)'
+                        .'|delete/([^/]++)(*:273)'
+                    .')'
+                    .'|nnulersortie/([^/]++)(*:303)'
                 .')'
-                .'|/profil/([^/]++)(*:295)'
+                .'|/monprofil/([^/]++)(*:331)'
+                .'|/profil/([^/]++)(*:355)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
@@ -58,11 +62,13 @@ return [
         168 => [[['_route' => '_profiler_exception', '_controller' => 'web_profiler.controller.exception_panel::body'], ['token'], null, null, false, false, null]],
         181 => [[['_route' => '_profiler_exception_css', '_controller' => 'web_profiler.controller.exception_panel::stylesheet'], ['token'], null, null, false, false, null]],
         191 => [[['_route' => '_profiler', '_controller' => 'web_profiler.controller.profiler::panelAction'], ['token'], null, null, false, true, null]],
-        226 => [[['_route' => 'admin_detail', '_controller' => 'App\\Controller\\AdminController::detailUtilisateur'], ['id'], null, null, false, true, null]],
-        247 => [[['_route' => 'admin_edit', '_controller' => 'App\\Controller\\AdminController::edit'], ['id'], null, null, false, true, null]],
-        270 => [[['_route' => 'admin_delete', '_controller' => 'App\\Controller\\AdminController::delete'], ['id'], null, null, false, true, null]],
-        295 => [
-            [['_route' => 'app_profil', '_controller' => 'App\\Controller\\ProfilController::modifProfil'], ['id'], null, null, false, true, null],
+        229 => [[['_route' => 'admin_detail', '_controller' => 'App\\Controller\\AdminController::detailUtilisateur'], ['id'], null, null, false, true, null]],
+        250 => [[['_route' => 'admin_edit', '_controller' => 'App\\Controller\\AdminController::edit'], ['id'], null, null, false, true, null]],
+        273 => [[['_route' => 'admin_delete', '_controller' => 'App\\Controller\\AdminController::delete'], ['id'], null, null, false, true, null]],
+        303 => [[['_route' => 'app_annuler_sortie', '_controller' => 'App\\Controller\\SortieController::annulerSortie'], ['id'], null, null, false, true, null]],
+        331 => [[['_route' => 'app_mon_profil', '_controller' => 'App\\Controller\\ProfilController::modifProfil'], ['id'], null, null, false, true, null]],
+        355 => [
+            [['_route' => 'app_profil', '_controller' => 'App\\Controller\\ProfilController::afficherProfil'], ['id'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],
     ],

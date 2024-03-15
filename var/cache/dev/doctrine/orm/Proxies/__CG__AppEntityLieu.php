@@ -7,7 +7,7 @@ namespace Proxies\__CG__\App\Entity;
  */
 class Lieu extends \App\Entity\Lieu implements \Doctrine\ORM\Proxy\InternalProxy
 {
-    use \Symfony\Component\VarExporter\LazyGhostTrait {
+     use \Symfony\Component\VarExporter\LazyGhostTrait {
         initializeLazyObject as __load;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
@@ -30,7 +30,7 @@ class Lieu extends \App\Entity\Lieu implements \Doctrine\ORM\Proxy\InternalProxy
         'rue' => [parent::class, 'rue', null],
         'sorties' => [parent::class, 'sorties', null],
         'ville' => [parent::class, 'ville', null],
-    ];
+    ];
 
     public function __isInitialized(): bool
     {

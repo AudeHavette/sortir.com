@@ -7,7 +7,7 @@ namespace Proxies\__CG__\App\Entity;
  */
 class Etat extends \App\Entity\Etat implements \Doctrine\ORM\Proxy\InternalProxy
 {
-    use \Symfony\Component\VarExporter\LazyGhostTrait {
+     use \Symfony\Component\VarExporter\LazyGhostTrait {
         initializeLazyObject as __load;
         setLazyObjectAsInitialized as public __setInitialized;
         isLazyObjectInitialized as private;
@@ -20,7 +20,7 @@ class Etat extends \App\Entity\Etat implements \Doctrine\ORM\Proxy\InternalProxy
         "\0".parent::class."\0".'libelle' => [parent::class, 'libelle', null],
         'id' => [parent::class, 'id', null],
         'libelle' => [parent::class, 'libelle', null],
-    ];
+    ];
 
     public function __isInitialized(): bool
     {
