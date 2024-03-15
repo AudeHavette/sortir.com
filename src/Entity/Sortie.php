@@ -54,6 +54,10 @@ class Sortie
     #[ORM\JoinColumn(nullable: false)]
     private ?Lieu $lieu = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $motifAnnulation = null;
+
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -218,5 +222,18 @@ class Sortie
     public function __toString(): string {
         return $this->getNom();
     }
+
+    public function getMotifAnnulation(): ?string
+    {
+        return $this->motifAnnulation;
+    }
+
+    public function setMotifAnnulation(?string $motifAnnulation): static
+    {
+        $this->motifAnnulation = $motifAnnulation;
+
+        return $this;
+    }
+
 
 }

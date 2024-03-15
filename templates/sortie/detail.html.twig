@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block body %}
+    <div>
+        <h2>{{ sortie.nom }} pour le  {{ sortie.campus.nom }}</h2>
+        <p>Statut : {{ sortie.etat.libelle }}</p>
+        <p>Inscriptions possibles jusqu'au {{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</p>
+        <p>Durée : {{ sortie.duree }} minutes</p>
+        <p> Lieu : {{ sortie.lieu.nom }}</p>
+        <p> Adresse du rendez-vous : {{ sortie.lieu.rue }} à {{ sortie.lieu.ville.nom }}</p>
+        <p>Nombre de places restantes: {{ sortie.nbInscriptionsMax - sortie.participants.count }}</p>
+        <p>Organisateur :  <a href="{{ path('app_profil', {'id': sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }} </a></p>
+        <p>Participants :</p>
+        <ul>
+            {% for participant in sortie.participants %}
+                <li>
+                    <a href="{{ path('app_profil', {'id': participant.id}) }}"> {{ participant.nom }} {{ participant.prenom }} </a>
+                </li>
+            {% endfor %}
+        </ul>
+        <p>Infos : {{ sortie.infosSortie }}</p>
+    </div>
+
+
+
+{% endblock %}
+

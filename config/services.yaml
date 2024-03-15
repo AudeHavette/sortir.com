@@ -6,6 +6,9 @@
 parameters:
 
 services:
+    Symfony\Component\Security\Http\Authentication\AuthenticationUtils:
+        arguments: [ '@request_stack' ]
+
 
 
     _defaults:

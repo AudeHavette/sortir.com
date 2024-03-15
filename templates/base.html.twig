@@ -9,6 +9,7 @@
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         {% endblock %}
     </head>
     <body>
@@ -21,7 +22,12 @@
             {% endfor %}
         {% endfor %}
 
-        <img src="{{ asset('images/sortir.jpg') }}" alt="Sortir.com">
+
+        <img src="{{ asset('images/sortir.jpg') }}" alt="Sortir.com" class="rotate-on-success" >
+
+        <div class="letter" style="left: 100px;">S</div>
+        <div class="letter" style="left: 200px;">O</div>
+        <div class="letter" style="left: 300px;">R</div>
 
         <nav>
             <ul>
@@ -32,6 +38,12 @@
                 <li>
                     <a href="">Campus</a>
                 </li>
+                    <li>
+                        <a href="{{path('admin_inscription')}}">Inscrire</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_liste') }}">Gestion utilisateur</a>
+                    </li>
                 {% endif %}
                 <li>
                     <a href="{{ path('app_home') }}">Accueil</a>
@@ -54,6 +66,12 @@
                 {% endif %}
             </ul>
         </nav>
+
+        <div class="letter" style="left: 400px;">T</div>
+        <div class="letter" style="left: 500px;">I</div>
+        <div class="letter" style="left: 600px;">R</div>
+
+
     </header>
     {% for label, messages in app.flashes %}
         {%  for message in messages %}

@@ -1,4 +1,8 @@
 <form method="post" action="{{ path('app_annuler_sortie', {'id': sortie.id}) }}" onsubmit="return confirm('🎉 Êtes-vous sûr(e) d\'annuler cette sortie ? 🎉');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sortie.id) }}">
-    <button class="btn">Supprimer sortie</button>
+    {{form_start(form) }}
+    {{ form_end(form) }}
 </form>
+
+
+
+

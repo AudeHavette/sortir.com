@@ -3,3 +3,17 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+inscriptionSortie:
+    path: '/inscriptionSortie/{id}'
+    controller: 'App\Controller\SortieController::inscriptionSortie'
+
+desistementSortie:
+    path: '/desistementSortie/{id}'
+    controller: 'App\Controller\SortieController::desistementSortie'
+
+publicationSortie:
+    path: '/publicationSortie/{id}'
+    controller: 'App\Controller\SortieController::publicationSortie'
+
+
