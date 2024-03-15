@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ parent () }} {{ user.pseudo }}
+{% endblock %}
+
+{% block body %}
+
+<h1>{{ user.pseudo }}</h1>
+    <p>{{ user.prenom }}</p>
+    <p>{{ user.nom }}</p>
+    <p>{{ user.telephone }}</p>
+    <p>{{ user.email }}</p>
+    <p>{{ user.campus.nom }}</p>
+
+    <a href="{{path('app_home')}}"><button>Retour</button></a>
+{% endblock %}
+
+
+
