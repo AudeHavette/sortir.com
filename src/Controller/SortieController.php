@@ -4,7 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Form\FilterSortiesType;
+use App\Form\SearchForm;
 use App\Form\SortieType;
+use App\Repository\SortieRepository;
+use App\SearchData;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,11 +18,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SortieController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function home(): Response
-    {
-        return $this->render('sortie/index.html.twig');
-    }
+
+
+
     #[Route('/createSortie', name: 'app_createSortie')]
     #[IsGranted('ROLE_USER')]
     public function creationSortie (Request $request, EntityManagerInterface $entityManager): Response{
@@ -59,6 +61,7 @@ class SortieController extends AbstractController
             $entityManager->remove($sortie);
             $entityManager->flush();
 
+
             $this->addFlash('success', 'La sortie a bien été annulée');
 
             return $this->redirectToRoute('app_home');
@@ -69,6 +72,23 @@ class SortieController extends AbstractController
 
     }
 
+    #[Route('/', name: 'app_home')]
+    public function home(Request $request, SortieRepository $sortieRepository): Response
+    {
+
+        $data=new SearchData();
+        $form=$this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+
+
+        $sorties=$sortieRepository->findSearch($data);
+
+        return $this->render('sortie/index.html.twig', [
+
+            'sorties'=>$sorties,
+            'form'=>$form->createView()
+        ]) ;
+    }
 
 
 }
