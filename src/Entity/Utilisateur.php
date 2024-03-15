@@ -46,6 +46,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $actif = null;
 
     #[ORM\Column(length: 255)]
+    #[Unique]
     private ?string $pseudo = null;
 
 
