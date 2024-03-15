@@ -1,0 +1,3 @@
+<?php //bd1985961586cd4fb147c5e20c005bfd
+
+return [PHP_INT_MAX, 'images/sortir.jpg'];
