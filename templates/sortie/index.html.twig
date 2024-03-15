@@ -1,8 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ parent () }}{% endblock %}
 
 {% block body %}
+    <h2>Filtrer les sorties</h2>
 
+    {{ form_start(form) }}
+
+
+    <button type="submit">Rechercher</button>
+    {{ form_end(form) }}
+
+
+
+
+
+
+    <h2>Liste des sorties</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Nom  de la sortie</th>
+            <th>Date de la sortie</th>
+            <th>Date de clôture d'inscription</th>
+            <th>Inscrits/Places</th>
+            <th>État</th>
+            <th>Inscrit</th>
+            <th>Organisateur</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+{%  for sortie in sorties %}
+        <tr>
+            <td>{{ sortie.nom }}</td>
+            <td>{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</td>
+            <td>{{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</td>
+            <td>{{ sortie.participants.count }} /{{ sortie.nbInscriptionsMax }}</td>
+            <td>{{ sortie.etat.libelle }}</td>
+            {% if app.user in sortie.participants %}
+            <td>X</td>
+            {%  endif %}
+            <td>{{ sortie.organisateur.nom }}</td>
+            <td><a href="#">Modifier</a> | <a href="#">Annuler</a> |  <a href="">Afficher</a>| <a href="">S'inscrire</a> | <a href="">Se désister</a> | <a href="">Publier</a></td>
+        </tr>
+{%  endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

@@ -9,6 +9,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +19,7 @@ class ProfilType extends AbstractType
     {
         $builder
             // Modifiable : pseudo Prénom Nom Tél Email Mdp Confirm Campus Ma photo
-            ->add('pseudo')
+            ->add('pseudo',TextType::class)
             ->add('nom')
             ->add('prenom')
             ->add('telephone')
@@ -28,12 +29,12 @@ class ProfilType extends AbstractType
                 'invalid_message' => 'Les mots de passe doivent être identiques',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options'  => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmation mot de passe'],
             ])
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
-                'choice_label' => 'id',
+                'choice_label' => 'nom',
             ])
             //todo : Ma photo
         ;
