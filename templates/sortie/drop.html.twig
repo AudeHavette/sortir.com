@@ -6,7 +6,7 @@
     <p>Date de la sortie : {{ sortie.dateHeureDebut|date('Y-m-d') }}</p>
     <p>Campus : {{ sortie.campus.nom }}</p>
     <p>Lieu : {{ sortie.lieu.nom }}</p>
-    <textarea>Motif :</textarea>
+
     {% include 'sortie/_delete_form.html.twig' %}
 {% endblock %}
 

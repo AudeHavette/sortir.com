@@ -2,17 +2,30 @@
 
 {% block title %}{{ parent () }}{% endblock %}
 
+
 {% block body %}
-    <h2>Filtrer les sorties</h2>
 
-    {{ form_start(form) }}
+    <div class="confirmation-message" class="confirmation-message.slide-out"
+         class="bouncing" class="sliding"></div>
+
+    <div class="tears-container"></div>
+
+    <div class="container_accueil">
+    <div>Date du jour : {{ "now"|date_modify('+1 hour')|date('d/m/y à H:i:s') }}</div>
+         {%  if app.user %}
+            <div>Bonjour :  {{ app.user.pseudo }}</div>
+        {% else %}
+            <div>Bonjour !</div>
+        {%  endif %}
+    </div>
 
 
-    <button type="submit">Rechercher</button>
-    {{ form_end(form) }}
-
-
-
+    <div>
+        <h2>Filtrer les sorties</h2>
+        {{ form_start(form) }}
+        <button type="submit">Rechercher</button>
+        {{ form_end(form) }}
+    </div>
 
 
 
@@ -20,32 +33,80 @@
     <table>
         <thead>
         <tr>
-            <th>Nom  de la sortie</th>
+            <th>Nom de la sortie</th>
             <th>Date de la sortie</th>
             <th>Date de clôture d'inscription</th>
             <th>Inscrits/Places</th>
             <th>État</th>
+            <th>Motif annulation</th>
             <th>Inscrit</th>
             <th>Organisateur</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
-{%  for sortie in sorties %}
-        <tr>
-            <td>{{ sortie.nom }}</td>
-            <td>{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</td>
-            <td>{{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</td>
-            <td>{{ sortie.participants.count }} /{{ sortie.nbInscriptionsMax }}</td>
-            <td>{{ sortie.etat.libelle }}</td>
-            {% if app.user in sortie.participants %}
-            <td>X</td>
-            {%  endif %}
-            <td>{{ sortie.organisateur.nom }}</td>
-            <td><a href="#">Modifier</a> | <a href="#">Annuler</a> |  <a href="">Afficher</a>| <a href="">S'inscrire</a> | <a href="">Se désister</a> | <a href="">Publier</a></td>
-        </tr>
-{%  endfor %}
+        {% for sortie in sorties %}
+
+            <tr style="width: 300px;">
+                <td style="width: 200px; height: 100px">{{ sortie.nom }}</td>
+                <td style="width: 200px; height: 100px">{{ sortie.dateHeureDebut|date('d/m/Y H:i') }}</td>
+                <td style="width: 200px; height: 100px">{{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</td>
+                <td style="width: 200px; height: 100px">{{ sortie.participants.count }} / {{ sortie.nbInscriptionsMax }}</td>
+                <td style="width: 200px; height: 100px">{{ sortie.etat.libelle }} </td>
+
+                {% if sortie.motifAnnulation %}
+                    <td style="width: 200px; height: 100px">{{ sortie.motifAnnulation }}</td>
+                {%  else %}
+                    <td style="width: 200px; height: 100px"> </td>
+                {%  endif %}
+
+                {% if app.user in sortie.participants %}
+                    <td style="width: 200px; height: 100px">X</td>
+                {% else %}
+                    <td style="width: 200px; height: 100px"> </td>
+                {% endif %}
+                <td style="width: 200px; height: 100px;">
+                    <a href="{{ path('app_profil', {'id': sortie.organisateur.id}) }}"> {{ sortie.organisateur.nom }}</a>
+                </td>
+                <td style="width: 200px; height: 100px">
+                    {% if app.user and sortie.organisateur == app.user %}
+                        {% if sortie.dateHeureDebut|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') and sortie.etat.libelle not in ['annulee']%}
+
+                                <a href="{{ path('app_editSortie', {'id':sortie.id}) }}" class="button">Modifier</a> |
+                                <a href="{{ path('app_annuler_sortie', {'id':sortie.id}) }}" class="button">Annuler</a> |
+
+                        {% endif %}
+                        {% if sortie.dateLimiteInscription|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') and sortie.etat.libelle in ['creee'] %}
+                            <button class="btn-publicationSortie" data-sortie-id="{{ sortie.id }}">Publier</button>
+                        {% endif %}
+                    {% endif %}
+                    {% if app.user %}
+                        {% if sortie.etat.libelle not in ['creee', 'cloturee'] %}
+                            <button>
+                                <a href= "{{ path('app_detail', {'id':sortie.id}) }}" class="button" >Afficher</a>
+                           </button>
+                            |
+                        {% endif %}
+                        {% if not sortie.participants.contains(app.user) and sortie.participants.count() < sortie.nbInscriptionsMax
+                            and sortie.dateLimiteInscription|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s')
+                            and sortie.etat.libelle in ['ouverte']%}
+                            <button class="btn-inscriptionSortie" data-sortie-id="{{ sortie.id }}">S'inscrire</button>
+                        {% endif %}
+                        {% if sortie.participants.contains(app.user) and sortie.dateHeureDebut|date('Y-m-d H:i:s')>= 'now'|date('Y-m-d H:i:s') %}
+                            <button class="btn-desistementSortie" data-sortie-id="{{ sortie.id }}">Se désister</button>
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>
+                        <button>
+                            <i class="fas fa-thumbs-up"></i> Like
+                        </button>
+                </td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
-
+    <button>
+        <a href="{{ path('app_createSortie') }}" class="button">Créer une sortie</a>
+    </button>
 {% endblock %}

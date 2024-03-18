@@ -26,6 +26,8 @@ class EtatRepository extends ServiceEntityRepository
         return $this->findOneBy(['libelle' => $libelle]);
     }
 
+
+
     //    /**
     //     * @return Etat[] Returns an array of Etat objects
     //     */
