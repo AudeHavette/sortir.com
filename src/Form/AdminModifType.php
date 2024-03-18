@@ -32,6 +32,9 @@ class AdminModifType extends AbstractType
             ])
             ->add('pseudo', null, [
                 'disabled' => true
+            ])
+            ->add('campus', null, [
+                'disabled'=>true
             ]);
 
         if ($options['isAdmin']) {
@@ -52,11 +55,8 @@ class AdminModifType extends AbstractType
                     ],
                     'multiple' => true,
                     'expanded' => true,
-                ])
-                ->add('campus', EntityType::class, [
-                    'class' => Campus::class,
-                    'choice_label' => 'nom',
                 ]);
+
 
         }
     }
