@@ -1,72 +1,64 @@
-/* Réinitialisation des styles et règles de base */
 *,
 *::before,
 *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
-html {
-    font-size: 100%; /* 16px */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    -webkit-text-size-adjust: 100%; /* Empêche les mobiles de modifier la taille du texte */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
 
 body {
-    background-color: #f7f7f7; /* Un fond léger */
-    color: #333; /* Gris foncé pour le texte principal */
-    font-weight: 400; /* Poids standard */
-    overflow-x: hidden; /* Empêche le défilement horizontal si le contenu déborde */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f7f7f7;
 }
 
-/* Structures et layout */
+
 .container {
-    width: 100%;
     max-width: 1200px;
-    margin: 0 auto; /* Centrer dans la page */
-    padding: 0 15px; /* Un peu de padding des deux côtés */
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-header,
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 footer {
-    background: #333;
-    color: #fff;
-    padding: 1rem 0;
+    background-color: #333;
+    color: white;
+    padding: 2rem 0;
     text-align: center;
 }
 
-/* Typographie */
-h1, h2, h3, h4, h5, h6 {
-    color: #5D4037; /* Marron pour les titres */
-    margin-bottom: 0.5rem;
-    font-weight: 600; /* Plus gros que le texte normal */
+nav {
+    align-self: stretch; /* étirer la barre de navigation sur toute la largeur */
+    display: flex;
+    justify-content: center; /* centrer les éléments de la navigation horizontalement */
+    padding: 1rem 0; /* ajouter un peu d'espace autour de la barre de navigation */
 }
 
-p {
-    margin-bottom: 1rem; /* Espacement standard pour les paragraphes */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px; /* espace entre les liens */
+    padding: 0;
+    margin: 0; /* supprimer la marge par défaut des listes */
 }
 
-a {
-    color: #795548; /* Marron pour les liens */
-    text-decoration: none; /* Pas de soulignement */
-    transition: color 0.3s; /* Transition douce pour les changements de couleur */
+nav li {
+    display: inline;
+    margin: 0 1rem;
 }
 
-a:hover,
-a:focus {
-    color: #3E2723; /* Marron plus foncé pour le hover */
-    text-decoration: underline; /* Souligne au survol pour l'accessibilité */
-}
-
-/* Boutons et liens cliquables */
-.button,
-a.button { /* Classe pour les <a> qui doivent ressembler à des boutons */
-    display: inline-block;
-    background: #6D4C41; /* Marron pour le fond */
+nav a {
+    font-weight: bold;
     color: #fff;
 
     padding: 0.1rem 0.3rem;
@@ -80,210 +72,91 @@ a.button { /* Classe pour les <a> qui doivent ressembler à des boutons */
     transition: background-color 0.3s, transform 0.3s;
 }
 
-.button:hover,
-.button:focus,
-a.button:hover,
-a.button:focus {
-    background: #5D4037; /* Marron plus foncé pour le hover */
-    transform: translateY(-3px); /* Légère élévation */
+nav a:hover,
+nav a:focus {
+    background-color: #000000;
+color: #ececec; / Light text on hover */
 }
 
-/* Formulaires */
+
+
+
 input[type="text"],
 input[type="email"],
 input[type="password"],
-textarea {
-    width: 100%; /* Pleine largeur */
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
+textarea,
+select {
+width: 100%;
+padding: 1rem;
+margin-bottom: 1rem;
+border: 1px solid #ccc;
+border-radius: 0.25rem;
+background-color: #fafafa; / Light background for inputs */
 }
 
+
+
+
+.button,
 input[type="submit"],
 button {
-    width: auto; /* Ne prend que l'espace nécessaire */
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 2rem;
-    background: #6D4C41;
-    color: white;
+background-color: #198754;
+color: white;
+padding: 0.75rem 1.5rem;
+border: none;
+border-radius: 0.5rem;
+cursor: pointer;
+transition: background-color 0.3s ease;
 }
 
+.button:hover,
 input[type="submit"]:hover,
 button:hover {
-    background: #5D4037; /* Marron plus foncé */
+    background-color: #198754;
 }
 
-/* Media queries pour la réactivité */
+
+.flash {
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.flash-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border-color: #c8e6c9;
+}
+
+.flash-error {
+    background-color: #ffebee;
+    color: #c62828;
+    border-color: #ffcdd2;
+}
+
+
 @media (max-width: 768px) {
     .container {
-        padding: 0 1rem;
-    }
-
-    h1 {
-        font-size: 2rem; /* Plus petit pour les petits écrans */
-    }
-}
-
-/* Ajouter ici des classes spécifiques à des composants ou à des pages si nécessaire */
-.createSortie-form select,
-.createSortie-form textarea {
-    width: 100%;
-    padding: .75rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.createSortie-form button {
-    width: auto;
-    padding: .5rem 1.5rem;
-    background-color: #6D4C41; /* Marron button to stay in theme */
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.createSortie-form button:hover {
-    background-color: #5D4037;
-}
-
-/* Responsiveness: Adapts to small screens */
-@media (max-width: 768px) {
-    .createSortie-container {
         padding: 1rem;
+    }header,
+     footer {
+         padding: 1.5rem 0;
+     }
+
+    nav ul {
+        padding: 0;
     }
 
-    .createSortie-form {
-        padding: 1rem;
+    nav li {
+        display: block;
+        margin: 0.5rem 0;
+    }
+
+    nav a {
+        display: block;
+        margin: 0.5rem auto;
     }
 }
-
-
-/* pour les messages flash*/
-
-.flash{
-    padding:20px;
-    font-weight: bold;
-    font-size: 1.4rem;
-    margin:1rem 0;
-    border-radius: 5px;
-}
-
-.flash-success{
-    background-color: rebeccapurple;
-}
-
-
-/* pour que le logo tourne sur lui-même*/
-@keyframes growAndRotate {
-    0% {
-        transform: scale(1) rotate(0deg);
-    }
-    50% {
-        transform: scale(1.2) rotate(180deg);
-    }
-    100% {
-        transform: scale(1) rotate(360deg);
-    }
-}
-
-.rotate-on-success {
-    animation: growAndRotate 2s ease-in-out forwards;
-}
-
-
-/* pour que les lettres S-O-R-T-I-R s'envolent*/
-@keyframes flyUp {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-1000px);
-    }
-}
-
-.letter {
-    position: absolute;
-    font-size: 24px;
-    color: white;
-    animation: flyUp 5s linear forwards;
-}
-
-/* pour qu'un message s'affiche à l'inscription à une sortie et défile vers la gauche après être apparu par la droite*/
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-    }
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideOutLeft {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-100%);
-    }
-}
-
-.confirmation-message {
-    font-family: Century;
-    font-size: 35px;
-    color: black;
-    text-align: right;
-    margin-top: 20px;
-    animation: slideInRight 5s ease forwards;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.confirmation-message.slide-out {
-    animation: slideOutLeft 1s ease forwards;
-}
-
-/*larmes désistement*/
-@keyframes fall {
-    0% { top: -20px; opacity: 1; }
-    100% { top: 100%; opacity: 0; }
-}
-
-.tear {
-    position: absolute;
-    width: 2px;
-    height: 10px;
-    background-color: #fff;
-    animation: fall linear 1s infinite;
-}
-
-
-.container_accueil{
-    float: right;
-    width: 20%;
-    font-family:"Montserrat", sans-serif;
-    font-size: large;
-}
-
-
-td{
-    height: 200px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
