@@ -68,9 +68,11 @@ a.button { /* Classe pour les <a> qui doivent ressembler à des boutons */
     display: inline-block;
     background: #6D4C41; /* Marron pour le fond */
     color: #fff;
+
     padding: 0.1rem 0.3rem;
     border: none;
     border-radius: 1rem; /* Arrondir les bords */
+
     cursor: pointer;
     font-size: 1rem;
     text-align: center;
@@ -159,7 +161,9 @@ button:hover {
     }
 }
 
+
 /* pour les messages flash*/
+
 .flash{
     padding:20px;
     font-weight: bold;
