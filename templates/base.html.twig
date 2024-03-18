@@ -21,35 +21,41 @@
         <a class="navbar-brand" href="{{ path('app_home') }}">
             <img src="{{ asset('images/sortir.jpg') }}" alt="Sortir.com" height="80">
         </a>
-        <ul>
-            {% if is_granted('ROLE_ADMIN') %}
-                <li>
-                    <a href="">Villes</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administration
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="adminDropdown">
+                            <a class="dropdown-item" href="#">Villes</a>
+                            <a class="dropdown-item" href="#">Campus</a>
+                            <a class="dropdown-item" href="#">Inscription</a>
+                            <a class="dropdown-item" href="#">Liste</a>
+                        </div>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
                 </li>
-                <li>
-                    <a href="">Campus</a>
-                </li>
-            {% endif %}
-            <li>
-                <a href="{{ path('app_home') }}">Accueil</a>
-            </li>
-
-            {% if app.user %}
-                <li>
-                    <a href="{{ path('app_mon_profil', {'id' : app.user.id}) }}">Mon profil</a>
-                </li>
-            {% endif %}
-
-            {% if app.user %}
-                <li>
-                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                </li>
-            {% else %}
-                <li>
-                    <a href="{{ path('app_login') }}">Se connecter</a>
-                </li>
-            {% endif %}
-        </ul>
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_mon_profil', {'id' : app.user.id}) }}">Mon profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </nav>
     <!-- Alertes flash -->
     {% for label, messages in app.flashes %}
@@ -59,21 +65,20 @@
             </div>
         {% endfor %}
     {% endfor %}
-</header>
 
+</header>
 <main role="main" class="container">
     {% block body %}
         <!-- Contenu de la page -->
     {% endblock %}
 </main>
-
 <footer class="footer bg-dark text-white text-center py-3">
     <div>&copy; {{ "now"|date_modify('+1 hour')|date('Y') }} Sortir.com</div>
 </footer>
-
 <!-- Optionnel : jQuery et Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.11/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
