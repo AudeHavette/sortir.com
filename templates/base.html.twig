@@ -10,6 +10,7 @@
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://kit.fontawesome.com/37a12967b6.js" crossorigin="anonymous"></script>
         {% endblock %}
     </head>
     <body>
@@ -25,43 +26,47 @@
 
         <img src="{{ asset('images/sortir.jpg') }}" alt="Sortir.com" class="rotate-on-success" >
 
+
+
         <div class="letter" style="left: 100px;">S</div>
         <div class="letter" style="left: 200px;">O</div>
         <div class="letter" style="left: 300px;">R</div>
+
+
 
         <nav>
             <ul>
                 {% if is_granted('ROLE_ADMIN') %}
                 <li>
-                    <a href="">Villes</a>
+                    <a href=""><i class="fa-solid fa-location"></i></a>
                 </li>
                 <li>
-                    <a href="">Campus</a>
+                    <a href=""><i class="fa-solid fa-tents"></i></a>
                 </li>
                     <li>
-                        <a href="{{path('admin_inscription')}}">Inscrire</a>
+                        <a href="{{path('admin_inscription')}}"><i class="fa-solid fa-file-pen"></i></a>
                     </li>
                     <li>
-                        <a href="{{ path('admin_liste') }}">Gestion utilisateur</a>
+                        <a href="{{ path('admin_liste') }}"><i class="fa-solid fa-user-tie"></i></a>
                     </li>
                 {% endif %}
                 <li>
-                    <a href="{{ path('app_home') }}">Accueil</a>
+                    <a href="{{ path('app_home') }}"><i class="fa-solid fa-house"></i></a>
                 </li>
 
                 {% if app.user %}
                 <li>
-                    <a href="{{ path('app_mon_profil', {'id' : app.user.id}) }}">Mon profil</a>
+                    <a href="{{ path('app_mon_profil', {'id' : app.user.id}) }}"><i class="fa-solid fa-user"></i></a>
                 </li>
                 {% endif %}
 
                 {% if app.user %}
                     <li>
-                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                        <a href="{{ path('app_logout') }}"><i class="fa-solid fa-lock"></i></a>
                     </li>
                 {% else %}
                     <li>
-                        <a href="{{ path('app_login') }}">Se connecter</a>
+                        <a href="{{ path('app_login') }}"><i class="fa-solid fa-lock-open"></i></a>
                     </li>
                 {% endif %}
             </ul>
@@ -70,6 +75,7 @@
         <div class="letter" style="left: 400px;">T</div>
         <div class="letter" style="left: 500px;">I</div>
         <div class="letter" style="left: 600px;">R</div>
+
 
 
     </header>
@@ -84,7 +90,22 @@
             {%  block body %}{% endblock %}
         </main>
         <footer>
-            <div>&copy; {{ "now"|date_modify('+1 hour')|date('d/m/y H:i:s') }}</div>
+            <div>&copy; Site developpé par le groupe ABC dans le cadre d'un projet à l'ENI :
+
+                <ul>
+                    <li>
+                        <a href="https://www.linkedin.com/in/havette-aude/" style="color: white">Aude Havette</a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/brandon-chartier/" style="color: white">Brandon Chartier</a>
+                    </li>
+                    <li>Clément Morel
+                    </li>
+                </ul>
+            </div>
         </footer>
+
+    </body>
+</html>
     </body>
 </html>
