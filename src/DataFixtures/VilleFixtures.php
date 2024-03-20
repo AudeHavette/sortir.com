@@ -18,17 +18,20 @@ class VilleFixtures extends Fixture
 
 
 
+
         $herblay = new Ville();
         $herblay->setNom('Herblay');
         $herblay->setCodePostal('95220');
         $manager->persist($herblay);
         $this->addReference('herblay', $herblay);
 
+
         $cherbourg = new Ville();
         $cherbourg->setNom('Cherbourg');
         $cherbourg->setCodePostal('50100');
         $manager->persist($cherbourg);
         $this->addReference('cherbourg', $cherbourg);
+
 
         $manager->flush();
     }

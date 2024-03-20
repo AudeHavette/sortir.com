@@ -1,84 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Sortir.com{% endblock %}</title>
-    {% block stylesheets %}
-        <!-- Insertion de votre feuille de style -->
-        <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-        <!-- Bootstrap CSS pour un design réactif et moderne -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    {% endblock %}
-    {% block javascripts %}
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
-    {% endblock %}
-</head>
-<body>
-<header class="mb-4">
-    <!-- Barre de navigation Bootstrap -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ path('app_home') }}">
-            <img src="{{ asset('images/sortir.jpg') }}" alt="Sortir.com" height="80">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Sortir.com{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://kit.fontawesome.com/37a12967b6.js" crossorigin="anonymous"></script>
+        {% endblock %}
+    </head>
+    <body>
+    <header>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+
+        <img src="{{ asset('images/sortir.jpg') }}" alt="Sortir.com" class="rotate-on-success" >
+
+
+
+        <div class="letter" style="left: 100px;">S</div>
+        <div class="letter" style="left: 200px;">O</div>
+        <div class="letter" style="left: 300px;">R</div>
+
+
+
+        <nav>
+            <ul>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Administration
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="adminDropdown">
-                            <a class="dropdown-item" href="#">Villes</a>
-                            <a class="dropdown-item" href="#">Campus</a>
-                            <a class="dropdown-item" href="#">Inscription</a>
-                            <a class="dropdown-item" href="#">Liste</a>
-                        </div>
+                <li >
+                    <a href=""><i class="fa-solid fa-location" style="color: white"></i></a>
+                </li>
+                <li>
+                    <a href=""><i class="fa-solid fa-tents" style="color: white"></i></a>
+                </li>
+                    <li>
+                        <a href="{{path('admin_inscription')}}" style="color: white"><i class="fa-solid fa-file-pen"></i></a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_liste') }}" style="color: white"><i class="fa-solid fa-user-tie"></i></a>
                     </li>
                 {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+                <li>
+                    <a href="{{ path('app_home') }}" style="color: white"><i class="fa-solid fa-house"></i></a>
                 </li>
+
                 {% if app.user %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_mon_profil', {'id' : app.user.id}) }}">Mon profil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+                <li>
+                    <a href="{{ path('app_mon_profil', {'id' : app.user.id}) }} " style="color: white"><i class="fa-solid fa-user"></i></a>
+                </li>
+                {% endif %}
+
+                {% if app.user %}
+                    <li>
+                        <a href="{{ path('app_logout') }}" style="color: white"><i class="fa-solid fa-lock"></i></a>
                     </li>
                 {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_login') }}">Se connecter</a>
+                    <li>
+                        <a href="{{ path('app_login') }}" style="color: white"><i class="fa-solid fa-lock-open"></i></a>
                     </li>
                 {% endif %}
             </ul>
-        </div>
-    </nav>
-    <!-- Alertes flash -->
+        </nav>
+
+        <div class="letter" style="left: 400px;">T</div>
+        <div class="letter" style="left: 500px;">I</div>
+        <div class="letter" style="left: 600px;">R</div>
+
+
+
+    </header>
     {% for label, messages in app.flashes %}
-        {% for message in messages %}
-            <div class="alert alert-{{ label }} text-center">
+        {%  for message in messages %}
+            <div class="flash flash-{{ label }}">
                 {{ message }}
             </div>
-        {% endfor %}
-    {% endfor %}
+        {%  endfor %}
+    {%  endfor %}
+        <main>
+            {%  block body %}{% endblock %}
+        </main>
+        <footer>
+            <div>&copy; Site developpé par le groupe ABC dans le cadre d'un projet à l'ENI :
 
-</header>
-<main role="main" class="container">
-    {% block body %}
-        <!-- Contenu de la page -->
-    {% endblock %}
-</main>
-<footer class="footer bg-dark text-white text-center py-3">
-    <div>&copy; {{ "now"|date_modify('+1 hour')|date('Y') }} Sortir.com</div>
-</footer>
-<!-- Optionnel : jQuery et Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.11/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+                <ul>
+                    <li>
+                        <a href="https://www.linkedin.com/in/aude-havette" style="color: white">Aude Havette</a>
+                    </li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/brandon-chartier/" style="color: white">Brandon Chartier</a>
+                    </li>
+                    <li>Clément Morel
+                    </li>
+                </ul>
+            </div>
+        </footer>
+
+    </body>
+</html>
+    </body>
 </html>
 

@@ -16,7 +16,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $apero->setNom('Boire un verre');
         $apero->setDateHeureDebut(new \DateTimeImmutable('2024-04-01 20:00:00'));
         $apero->setDuree(240);
-        $apero->setDateLimiteInscription(new \DateTimeImmutable('2024-03-15 00:00:00'));
+        $apero->setDateLimiteInscription(new \DateTimeImmutable('2024-03-31 00:00:00'));
         $apero->setNbInscriptionsMax(40);
         $apero->setInfosSortie('Détente');
         $apero->setEtat($this->getReference('etat_cree'));
@@ -32,7 +32,7 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
         $passeur->setNom('Un endroit sympa');
         $passeur->setDateHeureDebut(new \DateTimeImmutable('2024-04-02 20:00:00'));
         $passeur->setDuree(120);
-        $passeur->setDateLimiteInscription(new \DateTimeImmutable('2024-03-14 00:00:00'));
+        $passeur->setDateLimiteInscription(new \DateTimeImmutable('2024-03-20 00:00:00'));
         $passeur->setNbInscriptionsMax(20);
         $passeur->setInfosSortie('Un bon moment');
         $passeur->setEtat($this->getReference('etat_ouvert'));
@@ -46,9 +46,9 @@ class SortieFixtures extends Fixture implements DependentFixtureInterface
 
         $tourisme = new Sortie();
         $tourisme->setNom('Visiter le musée de la mer');
-        $tourisme->setDateHeureDebut(new \DateTimeImmutable('2024-04-01 14:00:00'));
+        $tourisme->setDateHeureDebut(new \DateTimeImmutable('2024-04-22 14:00:00'));
         $tourisme->setDuree(120);
-        $tourisme->setDateLimiteInscription(new \DateTimeImmutable('2024-03-15 00:00:00'));
+        $tourisme->setDateLimiteInscription(new \DateTimeImmutable('2024-03-21 00:00:00'));
         $tourisme->setNbInscriptionsMax(10);
         $tourisme->setInfosSortie('Un peu de tourisme');
         $tourisme->setEtat($this->getReference('etat_ouvert'));
