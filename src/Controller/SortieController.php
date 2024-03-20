@@ -62,8 +62,16 @@ class SortieController extends AbstractController
 
         if ($SortieForm->isSubmitted() && $SortieForm->isValid()) {
 
-            // $dateLimiteInscription = $sortie->getDateLimiteInscription();
-            // $dateDebutSortie = $sortie->getDateHeureDebut();
+            $now = new \DateTime();
+            if ($sortie->getDateHeureDebut() <= $now) {
+                throw new \LogicException("La date de la sortie ne peut etre antérieure à aujourd'hui");
+            }
+            if ($sortie->getDateLimiteInscription() <= $now) {
+                throw new \LogicException("La date limite d'inscription ne peut etre antérieure à aujourd'hui");
+            }
+            if ($sortie->getDateHeureDebut() <= $sortie->getDateLimiteInscription()) {
+                throw new \LogicException("La date limite d'inscription doit etre antérieure à la date de sortie");
+            }
 
 
             $entityManager->persist($sortie);
@@ -148,7 +156,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $motifAnnulation = $data['motifAnnulation'];
 
