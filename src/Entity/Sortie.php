@@ -236,7 +236,4 @@ class Sortie
     }
 
 
-
-
-
 }
