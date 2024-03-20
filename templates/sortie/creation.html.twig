@@ -3,11 +3,59 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <div>
-        {{ form_start(sortieForm) }}
-        {{ form_row(sortieForm) }}
-        <button>Créer une sortie </button>
-        {{ form_end(sortieForm) }}
-    </div>
+
+    {{ form_start(sortieForm, { attr: { id: 'creation_sortie_form' } }) }}
+    {{ form_row(sortieForm.nom) }}
+    {{ form_row(sortieForm.dateHeureDebut) }}
+    {{ form_row(sortieForm.duree) }}
+    {{ form_row(sortieForm.dateLimiteInscription) }}
+    {{ form_row(sortieForm.nbInscriptionsMax) }}
+    {{ form_row(sortieForm.infosSortie) }}
+    {{ form_row(sortieForm.campus) }}
+
+    {{ form_row(sortieForm.ville) }}    {# <select id="meetup_sport" ... #}
+    {{ form_row(sortieForm.lieu) }}
+    {# <select id="meetup_position" ... #}
+    <button>Créer sortie</button>
+    {{ form_end(sortieForm) }}
+
+    <script>
+        const form = document.getElementById('creation_sortie_form');
+        const form_select_ville = document.getElementById('sortie_ville');
+        const form_select_lieu = document.getElementById('sortie_lieu');
+
+        const updateForm = async (data, url, method) => {
+            const req = await fetch(url, {
+                method: method,
+                body: data,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'charset': 'utf-8'
+                }
+            });
+
+            const text = await req.text();
+
+            return text;
+        };
+
+        const parseTextToHtml = (text) => {
+            const parser = new DOMParser();
+            const html = parser.parseFromString(text, 'text/html');
+
+            return html;
+        };
+
+        const changeOptions = async (e) => {
+            const requestBody = e.target.getAttribute('name') + '=' + e.target.value;
+            const updateFormResponse = await updateForm(requestBody, form.getAttribute('action'), form.getAttribute('method'));
+            const html = parseTextToHtml(updateFormResponse);
+
+            const new_form_select_lieu = html.getElementById('sortie_lieu');
+            form_select_lieu.innerHTML = new_form_select_lieu.innerHTML;
+        };
+
+        form_select_ville.addEventListener('change', (e) => changeOptions(e));
+    </script>
 {% endblock %}
 
