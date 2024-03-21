@@ -3,13 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Campus;
-use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
-use App\Entity\Utilisateur;
 use App\Entity\Ville;
-use App\Repository\VilleRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -19,15 +15,10 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Form\EventListener\AddPlaceFieldSubscriber;
 
 class SortieType extends AbstractType
 {
-    private $villeRepository;
-
-    public function __construct(VilleRepository $villeRepository)
-    {
-        $this->villeRepository = $villeRepository;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -67,14 +58,9 @@ class SortieType extends AbstractType
                 'mapped' => false,
             ]);
 
-
-
-
-
         // En fonction de la ville sélectionnée on veut adapter le select des lieux
         $formModifier = function (FormInterface $form, ?Ville $ville = null) : void {
             $lieux = null === $ville ? [] : $ville->getLieux();//En principe, les lieux st récup ici
-
 
 
             // On veut ajouter les lieux récup au select lieux
@@ -84,6 +70,7 @@ class SortieType extends AbstractType
                 'placeholder' => 'Sélectionner un lieu',
                 'choices' => $lieux,
             ]);
+
 
 
         };
@@ -108,8 +95,9 @@ class SortieType extends AbstractType
 
                 //$ville = $data->getLieu()->getVille(); manquait ?null self operator
                 $ville = $data->getLieu()?->getVille();
+
                 //Il faut récup lieu avant getLieu->getVille sur $sata (Sortie)
-                $formModifier($event->getForm(), $ville);//ICI PB car $data=$sortie et pas de getVille dansSortie donc
+               $formModifier($event->getForm(), $ville);//ICI PB car $data=$sortie et pas de getVille dansSortie donc
                 //il faut récupérer lieu avant de faire $data->getLieu->getVille car lieu est nul
 
             } );
@@ -127,6 +115,9 @@ class SortieType extends AbstractType
                 );
         */
         $builder->setAction($options['action']);
+
+
+
     }
 
 
