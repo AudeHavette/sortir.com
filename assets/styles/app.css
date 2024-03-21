@@ -238,7 +238,6 @@ input[type="submit"]:hover {
 }
 
 
-/* pour que les lettres S-O-R-T-I-R s'envolent*/
 @keyframes flyUp {
     0% {
         transform: translateY(0);
@@ -315,6 +314,7 @@ input[type="submit"]:hover {
 td{
     height: 200px;
 }
+
 
 
 

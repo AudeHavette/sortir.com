@@ -6,6 +6,9 @@
 parameters:
 
 services:
+    App\EventListener\SortieEtatEventListener:
+        tags: [kernel.event_listener]
+
     Symfony\Component\Security\Http\Authentication\AuthenticationUtils:
         arguments: [ '@request_stack' ]
 
