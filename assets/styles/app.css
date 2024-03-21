@@ -16,6 +16,24 @@ html {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Réinitialisation des styles et règles de base */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%; /* 16px */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%; /* Empêche les mobiles de modifier la taille du texte */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 body {
     background-color: #f7f7f7; /* Un fond léger */
     color: #333; /* Gris foncé pour le texte principal */
@@ -272,6 +290,20 @@ button:hover {
 td{
     height: 200px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

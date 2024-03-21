@@ -18,6 +18,7 @@ class LieuFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($laBierePromise);
         $this->addReference('lieu_biere_promise', $laBierePromise);
 
+
         $laMaisonDuPasseur = new Lieu();
         $laMaisonDuPasseur->setNom('la Maison du Passeur');
         $laMaisonDuPasseur->setRue('1, Quai du Génie');

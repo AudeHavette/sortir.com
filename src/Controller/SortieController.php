@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Event\SortieUpdateEvent;
 use App\Form\SearchForm;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
 use App\SearchData;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,8 +21,16 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+
 class SortieController extends AbstractController
 {
+
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
 
     #[Route('/createSortie', name: 'app_createSortie')]
@@ -42,24 +52,43 @@ class SortieController extends AbstractController
         $sortie->setOrganisateur($this->getUser());
 
 
-        $SortieForm = $this->createForm(SortieType::class, $sortie);
+        $SortieForm = $this->createForm(SortieType::class, $sortie, [
+            'action'=>$this->generateUrl('app_createSortie')
+        ]);
+
         $SortieForm->handleRequest($request);
 
-        if ($SortieForm->isSubmitted()) {
+
+
+        if ($SortieForm->isSubmitted() && $SortieForm->isValid()) {
+
+            $now = new \DateTime();
+            if ($sortie->getDateHeureDebut() <= $now) {
+                throw new \LogicException("La date de la sortie ne peut etre antérieure à aujourd'hui");
+            }
+            if ($sortie->getDateLimiteInscription() <= $now) {
+                throw new \LogicException("La date limite d'inscription ne peut etre antérieure à aujourd'hui");
+            }
+            if ($sortie->getDateHeureDebut() <= $sortie->getDateLimiteInscription()) {
+                throw new \LogicException("La date limite d'inscription doit etre antérieure à la date de sortie");
+            }
+
+
             $entityManager->persist($sortie);
             $entityManager->flush();
 
             $this->addFlash('success', 'Sortie créée !');
-            return $this->redirectToRoute('app_createSortie');
+
+
+            return $this->redirectToRoute('app_home');
+
         }
+
 
         return $this->render('sortie/creation.html.twig', [
             'sortieForm' => $SortieForm->createView()
         ]);
     }
-
-
-
 
 
     #[Route('/editSortie/{id}', name: 'app_editSortie')]
@@ -97,15 +126,10 @@ class SortieController extends AbstractController
         }
 
         return $this->render('sortie/modification.html.twig', [
-            'sortie'=>$sortie,
+            'sortie' => $sortie,
             'sortieForm' => $SortieForm->createView()
         ]);
     }
-
-
-
-
-
 
 
     #[Route(path: ('/annulersortie/{id}'), name: 'app_annuler_sortie')]
@@ -113,8 +137,8 @@ class SortieController extends AbstractController
     {
 
         $user = $this->getUser();
-        if ($user !== $sortie->getOrganisateur()) {
-            throw $this->createAccessDeniedException("Seul l'organisateur peut annuler cette sortie");
+        if ($user !== $sortie->getOrganisateur() && !in_array('ROLE_ADMIN', $user->getRoles())) {
+            throw $this->createAccessDeniedException("Seul l'organisateur de la sortie et l'administrateur du site peuvent annuler cette sortie");
         }
 
         if ($sortie->getDateHeureDebut() <= new \DateTime()) {
@@ -132,7 +156,7 @@ class SortieController extends AbstractController
         $form->handleRequest($request);
 
 
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $motifAnnulation = $data['motifAnnulation'];
 
@@ -153,35 +177,40 @@ class SortieController extends AbstractController
             'sortie' => $sortie
         ]);
     }
-    #[Route(path: ('/annulersortie/{id}'), name:'app_annuler_sortie')]
-    public function annulerSortie(Request $request, Sortie $sortie, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$sortie->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($sortie);
-            $entityManager->flush();
-
-
-            $this->addFlash('success', 'La sortie a bien été annulée');
-
-            return $this->redirectToRoute('app_home');
-        }
-        return $this->render('sortie/drop.html.twig', [
-            'sortie'=> $sortie
-        ]);
-
-    }
 
     #[Route('/', name: 'app_home')]
-    public function home(Request $request, SortieRepository $sortieRepository): Response
+    public function home(Request $request, SortieRepository $sortieRepository, EntityManagerInterface $entityManager): Response
     {
 
         $data = new SearchData();
         $form = $this->createForm(SearchForm::class, $data);
         $form->handleRequest($request);
-
-
-
         $sorties = $sortieRepository->findSearch($data);
+
+
+//Foreach pour actualiser l'état de la sortie (si en cours, passée ou clôturée) en temps réel car via la méthode d'affichage
+
+        foreach ($sorties as $sortie) {
+            $dateDebut = $sortie->getDateHeureDebut();
+            $duree = $sortie->getDuree();
+            $dateFin = (clone $dateDebut)->modify("+{$duree} minutes");
+            $dateActuelle = new \DateTime();
+
+            $etatEncours = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'enCours']);
+            $etatPasse = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'passee']);
+            $etatCloture = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'cloturee']);
+
+            if ($dateActuelle >= $dateDebut && $dateActuelle <= $dateFin) {
+                $sortie->setEtat($etatEncours);
+            } elseif ($dateActuelle > $dateFin && $dateActuelle <= $dateFin->modify('+1 month')) {
+                $sortie->setEtat($etatPasse);
+            } elseif ($dateActuelle > $dateFin->modify('+1 month')) {
+                $sortie->setEtat($etatCloture);
+            }
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+        }
 
 
         return $this->render('sortie/index.html.twig', [
@@ -194,15 +223,16 @@ class SortieController extends AbstractController
     #[Route('/detail/{id}', name: 'app_detail')]
     public function detail(int $id, SortieRepository $sortieRepository): Response
     {
-        $sortie=$sortieRepository->find($id);
+        $sortie = $sortieRepository->find($id);
 
         return $this->render('sortie/detail.html.twig', [
-            "sortie"=>$sortie
+            "sortie" => $sortie
         ]);
     }
 
 
     #[Route('/inscriptionSortie/{id}', name: 'app_inscriptionSortie')]
+    #[IsGranted('ROLE_USER')]
     public function inscriptionSortie($id, Request $request, EntityManagerInterface $entityManager, SortieRepository $sortieRepository)
     {
 
@@ -246,7 +276,7 @@ class SortieController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function desistementSortieAction($id, EntityManagerInterface $entityManager, SortieRepository $sortieRepository): Response
     {
-        $user= $this->getUser();
+        $user = $this->getUser();
         $sortie = $sortieRepository->find($id);
         if (!$sortie) {
             throw $this->createNotFoundException('Sortie non trouvée.');
@@ -265,12 +295,11 @@ class SortieController extends AbstractController
     }
 
 
-
     #[Route('/publicationSortie/{id}', name: 'app_publicationSortie')]
     #[IsGranted('ROLE_USER')]
     public function publicationSortieAction($id, EntityManagerInterface $entityManager, SortieRepository $sortieRepository): Response
     {
-        $user= $this->getUser();
+        $user = $this->getUser();
         $sortie = $sortieRepository->find($id);
 
         if (!$sortie) {
@@ -282,21 +311,48 @@ class SortieController extends AbstractController
         }
 
         $etatOuvert = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'ouverte']);
-        if (!$etatOuvert) {
-            throw new \RuntimeException("L'état 'ouvert' n'a pas été trouvé.");
+        if ($sortie->getEtat()->getLibelle() !== $etatOuvert) {
+            $sortie->setEtat($etatOuvert);
+            $entityManager->persist($sortie);
+            $entityManager->flush();
         }
-
-
-        $sortie->setEtat($etatOuvert);
-        $entityManager->persist($sortie);
-        $entityManager->flush();
-
 
         return new JsonResponse(['success' => true, 'message' => 'Sortie publiée']);
     }
 
+/*
+    #[Route('/miseAJourSorties', name: 'app_miseAJourSorties')]
+    public function miseAjourSorties(Request $request, SortieRepository $sortieRepository, EntityManagerInterface $entityManager): Response
+    {
+        $sorties = $entityManager->getRepository(Sortie::class)->findAll();
+
+        foreach ($sorties as $sortie) {
+            $dateDebut = $sortie->getDateHeureDebut();
+            $duree = $sortie->getDuree();
+            $dateFin = (clone $dateDebut)->modify("+{$duree} minutes");
+            $dateActuelle = new \DateTime();
+
+            $etatEncours = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'enCours']);
+            $etatPasse = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'passee']);
+            $etatCloture = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'cloturee']);
+
+            if ($dateActuelle >= $dateDebut && $dateActuelle <= $dateFin) {
+                $sortie->setEtat($etatEncours);
+            } elseif ($dateActuelle > $dateFin && $dateActuelle <= $dateFin->modify('+1 month')) {
+                $sortie->setEtat($etatPasse);
+            } elseif ($dateActuelle > $dateFin->modify('+1 month')) {
+                $sortie->setEtat($etatCloture);
+            }
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+        }
+
+        return $this->render('sortie/index.html.twig', [
+            'sortie' => $sortie
+        ]);
+    }
+*/
 
 
 }
-
-

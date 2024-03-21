@@ -11,9 +11,9 @@
     <div class="tears-container"></div>
 
     <div class="container_accueil">
-    <div>Date du jour : {{ "now"|date_modify('+1 hour')|date('d/m/y à H:i:s') }}</div>
+    <div><i class="fa-regular fa-calendar"></i> {{ "now"|date_modify('+1 hour')|date('d/m/y à H:i:s') }}</div>
          {%  if app.user %}
-            <div>Bonjour :  {{ app.user.pseudo }}</div>
+            <div>Bonjour  {{ app.user.pseudo }} <i class="fa-sharp fa-regular fa-face-smile"></i></div>
         {% else %}
             <div>Bonjour !</div>
         {%  endif %}
@@ -21,15 +21,19 @@
 
 
     <div>
-        <h2>Filtrer les sorties</h2>
+        <h2><i class="fa-solid fa-user-secret"></i></h2>
         {{ form_start(form) }}
-        <button type="submit">Rechercher</button>
+        {{ form_row(form) }}
+        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         {{ form_end(form) }}
+
     </div>
 
 
 
     <h2>Liste des sorties</h2>
+
+
     <table>
         <thead>
         <tr>
@@ -69,37 +73,42 @@
                     <a href="{{ path('app_profil', {'id': sortie.organisateur.id}) }}"> {{ sortie.organisateur.nom }}</a>
                 </td>
                 <td style="width: 200px; height: 100px">
-                    {% if app.user and sortie.organisateur == app.user %}
+                        {% if app.user and sortie.organisateur == app.user %}
                         {% if sortie.dateHeureDebut|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') and sortie.etat.libelle not in ['annulee']%}
-
-                                <a href="{{ path('app_editSortie', {'id':sortie.id}) }}" class="button">Modifier</a> |
-                                <a href="{{ path('app_annuler_sortie', {'id':sortie.id}) }}" class="button">Annuler</a> |
-
+                                <a href="{{ path('app_editSortie', {'id':sortie.id}) }}" class="button"><i class="fa-solid fa-pen-to-square"></i></a>
                         {% endif %}
-                        {% if sortie.dateLimiteInscription|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') and sortie.etat.libelle in ['creee'] %}
-                            <button class="btn-publicationSortie" data-sortie-id="{{ sortie.id }}">Publier</button>
                         {% endif %}
-                    {% endif %}
-                    {% if app.user %}
+                        {% if app.user and (sortie.organisateur == app.user or 'ROLE_ADMIN' in app.user.roles) %}
+                        {% if sortie.dateHeureDebut|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') and sortie.etat.libelle not in ['annulee']%}
+                            <a href="{{ path('app_annuler_sortie', {'id':sortie.id}) }}" class="button"><i class="fa-solid fa-trash"></i></a>
+                        {% endif %}
+                        {% endif %}
+
+                        {% if sortie.dateLimiteInscription|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s') and sortie.etat.libelle in ['creee']
+                        and sortie.organisateur == app.user %}
+                                <button class="btn-publicationSortie" data-sortie-id="{{ sortie.id }}"><i class="fa-solid fa-book-open"></i></button>
+                        {%  endif %}
+
+                        {% if app.user %}
                         {% if sortie.etat.libelle not in ['creee', 'cloturee'] %}
                             <button>
-                                <a href= "{{ path('app_detail', {'id':sortie.id}) }}" class="button" >Afficher</a>
+                                <a href= "{{ path('app_detail', {'id':sortie.id}) }}" class="button" ><i class="fa-solid fa-eye"></i></a>
                            </button>
-                            |
+
                         {% endif %}
                         {% if not sortie.participants.contains(app.user) and sortie.participants.count() < sortie.nbInscriptionsMax
                             and sortie.dateLimiteInscription|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s')
                             and sortie.etat.libelle in ['ouverte']%}
-                            <button class="btn-inscriptionSortie" data-sortie-id="{{ sortie.id }}">S'inscrire</button>
+                            <button class="btn-inscriptionSortie" data-sortie-id="{{ sortie.id }}"><i class="fa-solid fa-plus"></i></button>
                         {% endif %}
                         {% if sortie.participants.contains(app.user) and sortie.dateHeureDebut|date('Y-m-d H:i:s')>= 'now'|date('Y-m-d H:i:s') %}
-                            <button class="btn-desistementSortie" data-sortie-id="{{ sortie.id }}">Se désister</button>
+                            <button class="btn-desistementSortie" data-sortie-id="{{ sortie.id }}"><i class="fa-solid fa-minus"></i></button>
                         {% endif %}
                     {% endif %}
                 </td>
                 <td>
                         <button>
-                            <i class="fas fa-thumbs-up"></i> Like
+                            <i class="fas fa-thumbs-up"></i>
                         </button>
                 </td>
             </tr>
@@ -107,6 +116,7 @@
         </tbody>
     </table>
     <button>
-        <a href="{{ path('app_createSortie') }}" class="button">Créer une sortie</a>
+        <a href="{{ path('app_createSortie') }}" class="button"><i class="fa-sharp fa-solid fa-pen-nib"></i></a>
     </button>
 {% endblock %}
+

@@ -28,7 +28,7 @@ class AdminController extends AbstractController
         $adminForm=$this->createForm(AdminType::class, $utilisateur);
         $adminForm->handleRequest($request);
 
-        if($adminForm->isSubmitted()){
+        if($adminForm->isSubmitted() && $adminForm->isValid()){
             // encode the plain password
             $utilisateur->setPassword(
                 $userPasswordHasher->hashPassword(
@@ -129,11 +129,16 @@ class AdminController extends AbstractController
     #[Route('/admin/delete/{id}', name: 'admin_delete')]
     public function delete(EntityManagerInterface $entityManager, Utilisateur $utilisateur): Response
     {
+        $sorties = $utilisateur->getSorties();
+
+        foreach ($sorties as $sortie) {
+            $entityManager->remove($sortie);
+        }
 
         $entityManager->remove($utilisateur);
         $entityManager->flush();
 
-        $this->addFlash('success', 'Utilisateur supprimé !');
+        $this->addFlash('success', 'Utilisateur supprimé ainsi que ses sorties !');
         return $this->redirectToRoute('admin_liste');
     }
 
