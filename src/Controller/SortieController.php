@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
-use App\Event\SortieUpdateEvent;
 use App\Form\SearchForm;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
@@ -191,22 +190,31 @@ class SortieController extends AbstractController
 //Foreach pour actualiser l'état de la sortie (si en cours, passée ou clôturée) en temps réel car via la méthode d'affichage
 
         foreach ($sorties as $sortie) {
-            $dateDebut = $sortie->getDateHeureDebut();
+            $timezone = new \DateTimeZone('Europe/Paris');
+            $dateDebut = clone $sortie->getDateHeureDebut();
+           // $dateDebut->setTimezone($timezone);
             $duree = $sortie->getDuree();
-            $dateFin = (clone $dateDebut)->modify("+{$duree} minutes");
-            $dateActuelle = new \DateTime();
+            $dateFin = (clone $dateDebut)->modify('+' . $duree . ' minutes');
+           // $dateFin->setTimezone($timezone);
+            $dateActuelle = new \DateTime('now', $timezone);
+            $enCours=($dateActuelle>=$dateDebut && $dateActuelle<=$dateFin);
 
-            $etatEncours = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'enCours']);
+            $etatEncours = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'encours']);
             $etatPasse = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'passee']);
             $etatCloture = $entityManager->getRepository(Etat::class)->findOneBy(['libelle' => 'cloturee']);
 
-            if ($dateActuelle >= $dateDebut && $dateActuelle <= $dateFin) {
+
+//dd($enCours);
+
+            if ($enCours) {
                 $sortie->setEtat($etatEncours);
-            } elseif ($dateActuelle > $dateFin && $dateActuelle <= $dateFin->modify('+1 month')) {
+            }
+              elseif ($dateActuelle > $dateFin && $dateActuelle <(clone $dateFin)->modify('+30 days')) {
                 $sortie->setEtat($etatPasse);
-            } elseif ($dateActuelle > $dateFin->modify('+1 month')) {
+            } elseif ($dateActuelle > $dateFin->modify('+30 days')) {
                 $sortie->setEtat($etatCloture);
             }
+
 
             $entityManager->persist($sortie);
             $entityManager->flush();
