@@ -24,13 +24,17 @@ class  SearchForm extends AbstractType {
                 'class' => Campus::class,
                 'choice_label' => 'nom',
                 'label' => 'Campus',
-                'required' => false
+                'required' => false,
+                'attr'=>[
+                    'class' => 'form-control select-sm'
+                ]
             ])
             ->add('nom', TextType::class, [
                 'label' => 'Nom de la sortie contient :',
                 'required' => false,
                 'attr'=>[
-                    'placeholder'=>'Soirée festive'
+                    'placeholder'=>'Soirée festive',
+                    'class'=>'form-control form-control-sm'
                 ]
             ])
             ->add('date', DateTimeType::class, [
@@ -45,11 +49,17 @@ class  SearchForm extends AbstractType {
                 'class' => Utilisateur::class,
                 'choice_label' => 'pseudo',
                 'label' => 'Organisateur',
-                'required' => false
+                'required' => false,
+                'attr'=>[
+                    'class' => 'form-control select-sm'
+                ]
             ])
         ->add('participants', EntityType::class, [
             'class'=>Utilisateur::class,
-                'required'=>false
+                'required'=>false,
+                'attr'=>[
+                    'class' => 'form-control select-sm'
+                ]
             ]
 
         );

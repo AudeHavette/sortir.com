@@ -20,22 +20,25 @@
     </div>
 
 
-    <div>
-        <h2><i class="fa-solid fa-user-secret"></i></h2>
-        {{ form_start(form) }}
-        {{ form_row(form) }}
-        <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        {{ form_end(form) }}
 
-    </div>
-
+<div class="filtre-container">
+    {{ form_start(form) }}
+    {{ form_row(form) }}
+    <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+    {{ form_end(form) }}
+</div>
 
 
+
+
+
+
+<div class="container">
     <h2>Liste des sorties</h2>
 
 
-    <table>
-        <thead>
+    <table class="table">
+        <thead class="table-light">
         <tr>
             <th>Nom de la sortie</th>
             <th>Date de la sortie</th>
@@ -91,10 +94,7 @@
 
                         {% if app.user %}
                         {% if sortie.etat.libelle not in ['creee', 'cloturee'] %}
-                            <button>
                                 <a href= "{{ path('app_detail', {'id':sortie.id}) }}" class="button" ><i class="fa-solid fa-eye"></i></a>
-                           </button>
-
                         {% endif %}
                         {% if not sortie.participants.contains(app.user) and sortie.participants.count() < sortie.nbInscriptionsMax
                             and sortie.dateLimiteInscription|date('Y-m-d H:i:s') > 'now'|date('Y-m-d H:i:s')
@@ -106,11 +106,6 @@
                         {% endif %}
                     {% endif %}
                 </td>
-                <td>
-                        <button>
-                            <i class="fas fa-thumbs-up"></i>
-                        </button>
-                </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -118,5 +113,6 @@
     <button>
         <a href="{{ path('app_createSortie') }}" class="button"><i class="fa-sharp fa-solid fa-pen-nib"></i></a>
     </button>
-{% endblock %}
+    <div>
 
+{% endblock %}

@@ -5,8 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <div>
-        <h2>{{ sortie.nom }} pour le  {{ sortie.campus.nom }}</h2>
+    <h2>{{ sortie.nom }} pour le  {{ sortie.campus.nom }}</h2>
+    <div class="container">
         <p>Statut : {{ sortie.etat.libelle }}</p>
         <p>Inscriptions possibles jusqu'au {{ sortie.dateLimiteInscription|date('d/m/Y H:i') }}</p>
         <p>Durée : {{ sortie.duree }} minutes</p>

@@ -32,10 +32,11 @@ class ProfilType extends AbstractType
                 'first_options'  => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Confirmation mot de passe'],
             ])
+            /*
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'nom',
-            ])
+            ])*/
             //todo : Ma photo
         ;
     }

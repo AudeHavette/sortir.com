@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Etat;
+use App\Entity\Sortie;
 use App\Entity\Utilisateur;
 use App\Form\AdminModifType;
 use App\Form\AdminType;
@@ -126,21 +128,21 @@ class AdminController extends AbstractController
 
 
 
+   
     #[Route('/admin/delete/{id}', name: 'admin_delete')]
-    public function delete(EntityManagerInterface $entityManager, Utilisateur $utilisateur): Response
+    public function delete(EntityManagerInterface $entityManager, Utilisateur $user, Sortie $sortie): Response
     {
-        $sorties = $utilisateur->getSorties();
+        $sortiesOrganisateur = $entityManager->getRepository(Sortie::class)->findBy(['organisateur' => $user]);
 
-        foreach ($sorties as $sortie) {
+        foreach ($sortiesOrganisateur as $sortie) {
             $entityManager->remove($sortie);
         }
 
-        $entityManager->remove($utilisateur);
+        $entityManager->remove($user);
         $entityManager->flush();
-
+        //dd($user);
         $this->addFlash('success', 'Utilisateur supprimé ainsi que ses sorties !');
         return $this->redirectToRoute('admin_liste');
     }
-
 
 }
