@@ -128,6 +128,7 @@ class AdminController extends AbstractController
 
 
 
+   
     #[Route('/admin/delete/{id}', name: 'admin_delete')]
     public function delete(EntityManagerInterface $entityManager, Utilisateur $user, Sortie $sortie): Response
     {
