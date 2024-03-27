@@ -1,20 +1,4 @@
-/* Réinitialisation des styles et règles de base */
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
-html {
-    font-size: 100%; /* 16px */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    -webkit-text-size-adjust: 100%; /* Empêche les mobiles de modifier la taille du texte */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
 
 /* Réinitialisation des styles et règles de base */
 *,
@@ -29,24 +13,29 @@ html {
     font-size: 100%; /* 16px */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    -webkit-text-size-adjust: 100%; /* Empêche les mobiles de modifier la taille du texte */
+    -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    background-color: #f7f7f7; /* Un fond léger */
-    color: #333; /* Gris foncé pour le texte principal */
-    font-weight: 400; /* Poids standard */
-    overflow-x: hidden; /* Empêche le défilement horizontal si le contenu déborde */
+    background-color: hsl(0, 100%, 100%);
+    color: #333;
+    font-weight: 400;
+    overflow-x: hidden;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 /* Structures et layout */
 .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto; /* Centrer dans la page */
-    padding: 0 15px; /* Un peu de padding des deux côtés */
+    width: 50%;
+    margin-left: 37.5%;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    background-color: white ;
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+
 }
 
 header,
@@ -59,42 +48,49 @@ footer {
 
 /* Typographie */
 h1, h2, h3, h4, h5, h6 {
-    color: #5D4037; /* Marron pour les titres */
-    margin-bottom: 0.5rem;
-    font-weight: 600; /* Plus gros que le texte normal */
+    color: #1a1d20;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-align: center;
+    font-style: italic;
+    font-family: 'Times New Roman', Times, serif;
+
 }
 
 p {
-    margin-bottom: 1rem; /* Espacement standard pour les paragraphes */
+    margin-bottom: 1rem;
+    color:black;
+    font-family: "Calibri Light";
 }
 
 a {
-    color: #795548; /* Marron pour les liens */
-    text-decoration: none; /* Pas de soulignement */
-    transition: color 0.3s; /* Transition douce pour les changements de couleur */
+    color:black;
+    text-decoration: none;
+    transition: color 0.3s;
+
 }
 
 a:hover,
 a:focus {
-    color: #3E2723; /* Marron plus foncé pour le hover */
-    text-decoration: underline; /* Souligne au survol pour l'accessibilité */
+    color: whitesmoke;
+    text-decoration: underline;
 }
 
 /* Boutons et liens cliquables */
 .button,
-a.button { /* Classe pour les <a> qui doivent ressembler à des boutons */
+a.button {
     display: inline-block;
-    background: #6D4C41; /* Marron pour le fond */
-    color: #fff;
+    background: darkgrey;
+    color: white;
 
     padding: 0.1rem 0.3rem;
     border: none;
-    border-radius: 1rem; /* Arrondir les bords */
+    border-radius: 1rem;
 
     cursor: pointer;
     font-size: 1rem;
     text-align: center;
-    text-decoration: none; /* Pas de soulignement */
+    text-decoration: none;
     transition: background-color 0.3s, transform 0.3s;
 }
 
@@ -102,23 +98,24 @@ a.button { /* Classe pour les <a> qui doivent ressembler à des boutons */
 .button:focus,
 a.button:hover,
 a.button:focus {
-    background: #5D4037; /* Marron plus foncé pour le hover */
-    transform: translateY(-3px); /* Légère élévation */
+    background: cornflowerblue;
+    transform: translateY(-3px);
 }
 
 /* Formulaires */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="date"],
+input,
 textarea,
 select {
-    width: 100%;
-    padding: 10px 15px;
-    margin-bottom: 15px;
+    width: 50%;
+    padding: 4px 8px;
+    margin-bottom: 1rem;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    box-shadow: inset 0 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+    list-style-type: none;
 }
 label {
     display: block;
@@ -129,20 +126,31 @@ label {
 button,
 input[type="submit"] {
     margin-top: 10px;
+    margin-left: 8rem;
     padding: 10px 20px;
-    background-color: #5D4037;
-    color: #fff;
+    background-color: darkgrey;
+    color: white;
     border: none;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
+
 }
 
 button:hover,
 input[type="submit"]:hover {
-    background-color: #3E2723;
+    background-color: cornflowerblue;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
+
+.card{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+    width: 80%;
+    background-color: #dddddd;
+}
+
 
 
 @media (max-width: 768px) {
@@ -182,7 +190,7 @@ input[type="submit"]:hover {
     padding: 8px 16px;
 }
 
-/* Ajouter ici des classes spécifiques à des composants ou à des pages si nécessaire */
+
 .createSortie-form select,
 .createSortie-form textarea {
     width: 100%;
@@ -194,7 +202,7 @@ input[type="submit"]:hover {
 .createSortie-form button {
     width: auto;
     padding: .5rem 1.5rem;
-    background-color: #6D4C41;
+    background-color: darkgray;
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -203,7 +211,7 @@ input[type="submit"]:hover {
 }
 
 .createSortie-form button:hover {
-    background-color: #5D4037;
+    background-color: cornflowerblue;
 }
 /* pour les messages flash*/
 
@@ -216,7 +224,7 @@ input[type="submit"]:hover {
 }
 
 .flash-success{
-    background-color: rebeccapurple;
+    background-color: cornflowerblue;
 }
 
 
@@ -234,7 +242,7 @@ input[type="submit"]:hover {
 }
 
 .rotate-on-success {
-    animation: growAndRotate 2s ease-in-out forwards;
+    animation: growAndRotate 10s ease-in-out forwards;
 }
 
 
@@ -251,7 +259,7 @@ input[type="submit"]:hover {
     position: absolute;
     font-size: 24px;
     color: white;
-    animation: flyUp 5s linear forwards;
+    animation: flyUp 20s linear forwards;
 }
 
 /* pour qu'un message s'affiche à l'inscription à une sortie et défile vers la gauche après être apparu par la droite*/
@@ -305,7 +313,7 @@ input[type="submit"]:hover {
 
 .container_accueil{
     float: right;
-    width: 20%;
+    width: 15%;
     font-family:"Montserrat", sans-serif;
     font-size: large;
 }
@@ -314,6 +322,30 @@ input[type="submit"]:hover {
 td{
     height: 200px;
 }
+
+
+.filtre-container {
+    display: inline-block;
+    width: auto;
+    max-height: 34rem ;
+    padding: 5px;
+    background-color: ghostwhite;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid darkgrey;
+    position: absolute;
+    margin-top: 4rem;
+    margin-left: 2rem;
+}
+
+
+
+
+
+
+
+
+
 
 
 

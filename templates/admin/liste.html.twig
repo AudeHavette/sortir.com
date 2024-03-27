@@ -8,7 +8,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ utilisateur.prenom }} {{ utilisateur.nom }}</h5>
                     <p class="card-text">{{ utilisateur.campus.nom }}</p>
-                    <a href="{{ path('admin_detail', {'id':utilisateur.id}) }}" class="btn btn-primary">Voir</a>
+                    <a href="{{ path('admin_detail', {'id':utilisateur.id}) }}" class="container">Voir</a>
                 </div>
             </div><br>
         {%  endfor %}

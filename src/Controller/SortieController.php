@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-
+#[IsGranted('ROLE_USER')]
 class SortieController extends AbstractController
 {
 
@@ -52,7 +52,7 @@ class SortieController extends AbstractController
 
 
         $SortieForm = $this->createForm(SortieType::class, $sortie, [
-            'action'=>$this->generateUrl('app_createSortie')
+            'action'=>$this->generateUrl('app_createSortie')//cette méth genere url à partir du nom de la route
         ]);
 
         $SortieForm->handleRequest($request);

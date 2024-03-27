@@ -36,37 +36,31 @@
 
         <nav>
             <ul>
+                <li>
+                    <a href="{{ path('app_home') }}" style="color: white">Accueil</a>
+                </li>
                 {% if is_granted('ROLE_ADMIN') %}
-                <li >
-                    <a href=""><i class="fa-solid fa-location" style="color: white"></i></a>
-                </li>
-                <li>
-                    <a href=""><i class="fa-solid fa-tents" style="color: white"></i></a>
-                </li>
                     <li>
-                        <a href="{{path('admin_inscription')}}" style="color: white"><i class="fa-solid fa-file-pen"></i></a>
+                        <a href="{{path('admin_inscription')}}" style="color: white">Inscription (by Admin)</a>
                     </li>
                     <li>
-                        <a href="{{ path('admin_liste') }}" style="color: white"><i class="fa-solid fa-user-tie"></i></a>
+                        <a href="{{ path('admin_liste') }}" style="color: white">Admin</a>
                     </li>
                 {% endif %}
-                <li>
-                    <a href="{{ path('app_home') }}" style="color: white"><i class="fa-solid fa-house"></i></a>
-                </li>
 
                 {% if app.user %}
                 <li>
-                    <a href="{{ path('app_mon_profil', {'id' : app.user.id}) }} " style="color: white"><i class="fa-solid fa-user"></i></a>
+                    <a href="{{ path('app_mon_profil', {'id' : app.user.id}) }} " style="color: white">Profil</a>
                 </li>
                 {% endif %}
 
                 {% if app.user %}
                     <li>
-                        <a href="{{ path('app_logout') }}" style="color: white"><i class="fa-solid fa-lock"></i></a>
+                        <a href="{{ path('app_logout') }}" style="color: white">Déconnexion</a>
                     </li>
                 {% else %}
                     <li>
-                        <a href="{{ path('app_login') }}" style="color: white"><i class="fa-solid fa-lock-open"></i></a>
+                        <a href="{{ path('app_login') }}" style="color: white">Connexion</a>
                     </li>
                 {% endif %}
             </ul>

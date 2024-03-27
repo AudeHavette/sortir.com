@@ -3,7 +3,8 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-
+    <h1>Créer une sortie</h1>
+    <div class="container">
     {{ form_start(sortieForm, { attr: { id: 'creation_sortie_form' } }) }}
     {{ form_row(sortieForm.nom) }}
     {{ form_row(sortieForm.dateHeureDebut) }}
@@ -18,14 +19,15 @@
     {# <select id="meetup_position" ... #}
     <button>Créer sortie</button>
     {{ form_end(sortieForm) }}
-
-    <script>
-        const form = document.getElementById('creation_sortie_form');
+</div>
+    <script>{#  #}
+        const form = document.getElementById('creation_sortie_form');//on récup les elements du form av les id correpondant
         const form_select_ville = document.getElementById('sortie_ville');
         const form_select_lieu = document.getElementById('sortie_lieu');
 
-        const updateForm = async (data, url, method) => {
-            const req = await fetch(url, {
+        const updateForm = async (data, url, method) => {//req http asynchrone pour mise à jour form avec envoi donnees à l'url specifiee
+            // elle renvoie la rep ss forme de txt
+            const req = await fetch(url, {//f° fetch envoie req htpp asynchrone au serveur qd event sur chp ville
                 method: method,
                 body: data,
                 headers: {
@@ -39,23 +41,24 @@
             return text;
         };
 
-        const parseTextToHtml = (text) => {
+        const parseTextToHtml = (text) => {// cette f° prend du texte en entree et le parse en objet Html
             const parser = new DOMParser();
             const html = parser.parseFromString(text, 'text/html');
 
             return html;
         };
 
-        const changeOptions = async (e) => {
+        const changeOptions = async (e) => {//f° appelée qd selection de ville=> elle envoi req avec f° updateForm pour MAJ lieux en f° ville
             const requestBody = e.target.getAttribute('name') + '=' + e.target.value;
-            const updateFormResponse = await updateForm(requestBody, form.getAttribute('action'), form.getAttribute('method'));
-            const html = parseTextToHtml(updateFormResponse);
+            const updateFormResponse = await updateForm(requestBody, form.getAttribute('action'), form.getAttribute('method'));//traite rep serveur
+            const html = parseTextToHtml(updateFormResponse); //Et elle utilise parseTextToHtml pour extraire résultat et MAJ ds le select des lieux
 
             const new_form_select_lieu = html.getElementById('sortie_lieu');
             form_select_lieu.innerHTML = new_form_select_lieu.innerHTML;
         };
 
-        form_select_ville.addEventListener('change', (e) => changeOptions(e));
+        form_select_ville.addEventListener('change', (e) => changeOptions(e));// add ecouteur sur select ville. si new selection la f° changeOptions appelée pour MAJ
+        //dynamique du select lieux
     </script>
 {% endblock %}
 

@@ -126,6 +126,22 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('organisateur', $filters->organisateur);
         }
 
+        /*
+         * if ($filters->organisateur) {
+
+    $queryBuilder
+        ->leftJoin('s.organisateur', 'o')
+        ->andWhere('o.nom = :nomUser')
+        ->setParameter('nomUser', $organisateur>getNom());
+} else {
+
+    $queryBuilder
+        ->leftJoin('s.organisateur', 'o')
+        ->andWhere('o.nom != :nomUser')
+        ->setParameter('nomUser', $nomUser->getNom());
+}
+         * */
+
         if ($filters->participants) {
             $queryBuilder
                 ->leftJoin('s.participants', 'p')
